@@ -11,11 +11,6 @@ node {
   // Version of npm to use.
   npmVersion = '9.4.0'
 
-  // Base URL for fetching node distributions (change if you have a mirror).
-  // Setting this to null as a workaround for insecure protocol until bugfix in plugin
-  // See: https://issueexplorer.com/issue/node-gradle/gradle-node-plugin/163
-  distBaseUrl = null
-
   // If true, it will download node using above parameters.
   // If false, it will try to use globally installed node.
   download = true
@@ -55,7 +50,7 @@ task packageSpaApp(type: org.gradle.api.tasks.bundling.Zip) {
   archiveBaseName = 'spa-web'
   archiveExtension = 'jar'
   destinationDirectory = file("${projectDir}/build/packageSpaApp")
-  from('dist/app') {
+  from('dist') {
     // optional path under which output will be visible in Java classpath, e.g. static resources path
     into 'public'
   }
