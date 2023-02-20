@@ -1,0 +1,15 @@
+Thumbs.db
+.DS_Store
+.gradle
+build/
+bin
+bin.nosync
+target/
+out/
+.micronaut/
+.idea
+*.iml
+*.ipr
+*.iws
+/.apt_generated/
+/.apt_generated_tests/

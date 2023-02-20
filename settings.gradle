@@ -1,0 +1,3 @@
+rootProject.name = 'demo-vue-micronaut-jwt'
+include 'micronaut-server'
+include 'vue-client'
