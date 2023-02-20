@@ -3,7 +3,11 @@ plugins {
 }
 
 
+
+
 allprojects {
+  version = '0.1'
+  group = 'com.example.demo-spa'
   repositories {
     mavenCentral()
   }

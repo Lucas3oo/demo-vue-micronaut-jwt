@@ -29,7 +29,7 @@ npmInstall {
   args = ['--ignore-scripts', '--no-fund', '--no-audit']
 }
 npm_run_build {
-  inputs.files (fileTree('projects'),fileTree('src'),'package.json','package-lock.json')
+  inputs.files (fileTree('public'),fileTree('src'),'package.json','package-lock.json')
   outputs.dirs ('dist')
 }
 npm_run_build.dependsOn npmInstall
@@ -49,7 +49,7 @@ task packageSpaApp(type: org.gradle.api.tasks.bundling.Zip) {
   dependsOn npm_run_build
   archiveBaseName = 'spa-web'
   archiveExtension = 'jar'
-  destinationDirectory = file("${projectDir}/build/packageSpaApp")
+  destinationDirectory = file("${buildDir}/packageSpaApp")
   from('dist') {
     // optional path under which output will be visible in Java classpath, e.g. static resources path
     into 'public'
