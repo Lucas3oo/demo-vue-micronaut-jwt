@@ -35,41 +35,20 @@ npm_run_build {
 npm_run_build.dependsOn npmInstall
 
 // start the node server by ../gradlew npm_start
-// or ./gradlew web:npm_start in the root folder
+// or ./gradlew vue-client:npm_start in the root folder
 // run test by ../gradlew npm_test
 
 // to use the ng "watch" feature run
-// ./gradlew web:npm_run_watch-all
-// then you can reload the app started from spring instead and get the latest changes you have done.
+// ./gradlew vue-client:npm_run_watch-all
+// then you can reload the app started from micronaut instead and get the latest changes you have done.
 // wait for Compilation complete. Watching for file changes...
 // and then refresh the dist folder in Eclipse
 
 
-task packageSpaApp(type: org.gradle.api.tasks.bundling.Zip) {
-  dependsOn npm_run_build
-  archiveBaseName = 'spa-web'
-  archiveExtension = 'jar'
-  destinationDirectory = file("${buildDir}/packageSpaApp")
-  from('dist') {
-    // optional path under which output will be visible in Java classpath, e.g. static resources path
-    into 'public'
-  }
-}
-configurations {
-  npmResources
-}
-configurations.default.extendsFrom(configurations.npmResources)
-artifacts {
-  npmResources(packageSpaApp.archivePath) {
-    builtBy packageSpaApp
-    type 'jar'
-  }
-}
-assemble.dependsOn(packageSpaApp)
 
 
 clean {
-  delete 'build'
+  delete "${buildDir}"
   delete 'dist'
   delete 'coverage'
 }
@@ -79,7 +58,6 @@ clean {
 build.mustRunAfter clean
 assemble.mustRunAfter clean
 npm_run_build.mustRunAfter clean
-packageSpaApp.mustRunAfter clean
 npmInstall.mustRunAfter clean
 
 

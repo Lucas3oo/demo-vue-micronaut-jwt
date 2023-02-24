@@ -1,4 +1,4 @@
-package com.example.tsid.book;
+package com.example.demo.book;
 
 import org.mapstruct.Mapper;
 

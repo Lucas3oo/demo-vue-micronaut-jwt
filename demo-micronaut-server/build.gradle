@@ -72,19 +72,17 @@ java {
 graalvmNative.toolchainDetection = false
 
 
-// package all dependecies inside the JAR as separate JARs. Much cleaner compared to a fat/shadow JAR.
-// And shadow jar is suppose to be used when you actually need to shadow a third party lib with your own version.
-jar {
-  into('lib') {
-    from configurations.runtimeClasspath
+// add the files from demo-vue-client dist folder into the jar, into a public folder
+// which micronaut has in the classpath so it can server the web resources (i.e. the SPA app)
+tasks.processResources {
+  into('public') {
+    from tasks.getByPath(':demo-vue-client:npm_run_build')
   }
-  manifest {
-    def classpath = configurations.runtimeClasspath.copyRecursive().resolve().collect { file ->
-      'lib/${file.name}'
-    }.sort().join(' ')
-    attributes 'Main-Class': applicationClass
-    attributes 'Class-Path': classpath
-  }
+}
+
+
+tasks.named('distTar') {
+  enabled = false
 }
 
 
@@ -94,7 +92,7 @@ micronaut {
   testRuntime('junit5')
   processing {
     incremental(true)
-    annotations('com.example.tsid.*')
+    annotations('com.example.demo.*')
   }
 }
 

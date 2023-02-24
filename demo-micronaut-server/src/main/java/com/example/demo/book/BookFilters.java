@@ -1,4 +1,4 @@
-package com.example.tsid.book;
+package com.example.demo.book;
 
 import io.micronaut.core.annotation.Introspected;
 
