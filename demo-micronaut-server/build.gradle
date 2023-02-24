@@ -59,7 +59,7 @@ dependencies {
 
 
 
-def applicationClass = 'com.example.tsid.TsIdDemoApplication'
+def applicationClass = 'com.example.demo.DemoApplication'
 application {
   mainClass.set(applicationClass)
 }
