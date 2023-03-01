@@ -1,6 +1,6 @@
 plugins {
-    id 'base'
-    id "com.github.node-gradle.node" version "3.2.1"
+  id 'base'
+  id "com.github.node-gradle.node" version '3.2.1'
 }
 
 
@@ -33,18 +33,6 @@ npm_run_build {
   outputs.dirs ('dist.nosync')
 }
 npm_run_build.dependsOn npmInstall
-
-// start the node server by ../gradlew npm_start
-// or ./gradlew vue-client:npm_start in the root folder
-// run test by ../gradlew npm_test
-
-// to use the ng "watch" feature run
-// ./gradlew vue-client:npm_run_watch-all
-// then you can reload the app started from micronaut instead and get the latest changes you have done.
-// wait for Compilation complete. Watching for file changes...
-// and then refresh the dist folder in Eclipse
-
-
 
 
 clean {

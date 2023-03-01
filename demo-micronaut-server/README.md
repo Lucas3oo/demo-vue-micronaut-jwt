@@ -1,21 +1,10 @@
-# demo-tsid-hibernate
-Demo project to test TSID (Time-Sorted Identifiers) instead of UUID/ sequence ID as primary keys in the DB
+# demo-micronaut-server
 
+Demo project with an REST API written with Micronaut.
 
+Start the app with (in the root folder of the multi-project)
 
-
-##Start a DB with
-
-Docker’s MySQL images has user root@% by Oracle only has root@localhost
-User Docker’s version called mysql:8.0
-
-    docker run --name=mysql-demo --restart on-failure --detach   -e MYSQL_ROOT_PASSWORD=my-password -e MYSQL_DATABASE=app-db  -e MYSQL_USER=app-db-user -e MYSQL_PASSWORD=my-password --publish 3306:3306 mysql:8.0
-
-
-    docker stop/start/rm mysql-demo
-
-    docker exec -it mysql-demo mysql -uroot -p
-
+    ./gradlew run
 
 ## Testing the REST API
 In this very small sample app there one endpoint to list, retrieve and create books.
