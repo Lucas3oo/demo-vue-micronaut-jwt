@@ -7,14 +7,20 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.math.NumberUtils;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
+import io.micronaut.http.exceptions.HttpStatusException;
+import io.micronaut.retry.annotation.Retryable;
 import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.validation.Validated;
 
@@ -30,13 +36,12 @@ public class BookController {
   @Inject
   private BookMapper mMapper;
 
-  @Post()
+  @Post
   @Transactional
-  public Long add(@Body @Valid BookDto book) {
+  @Retryable(attempts = "1", includes = ConstraintViolationException.class)
+  public Long create(@Body @Valid BookDto book) {
     sLogger.debug("in add method");
-    BookEntity entity = mMapper.convertToEntity(book);
-    // set id to null to ensure that it will be a new book we are adding.
-    entity.setId(null);
+    BookEntity entity = mMapper.createNewEntity(book);
     Long id = mRepository.save(entity).getId();
 
     return id;
@@ -53,6 +58,8 @@ public class BookController {
   @Get("{?bookFilters*}")
   @ReadOnly
   public Optional<List<BookDto>> getByQueryParams(@Valid BookFilters bookFilters) {
+    sLogger.debug("in getByQueryParams method");
+
     // even if bookFilters is indeed optional the instance is created but with its properties set to null.
     if (bookFilters.getDescription() != null) {
       Optional<BookDto> book = mRepository.retrieveByDescription(bookFilters.getDescription());
@@ -68,7 +75,21 @@ public class BookController {
   @Get("/{id}")
   @ReadOnly
   public Optional<BookDto> getById(@PathVariable Long id) {
+    sLogger.debug("in getById method, id: {}", id);
+    // empty Optional will be translated to 404
     return mRepository.retrieveById(id);
+  }
+
+  @Put("/{id}")
+  @Transactional
+  public void update(@PathVariable Long id, @Body @Valid BookDto book) {
+    sLogger.debug("in update method, id: {}", id);
+    if (!id.equals(NumberUtils.createLong(book.getId()))) {
+      throw new HttpStatusException(HttpStatus.BAD_REQUEST, "Id in path and id in DTO are not the same.");
+    }
+    BookEntity entity = mRepository.findById(id)
+        .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Book with id '" + id + "' not found"));
+    mMapper.updateEntity(book, entity);
   }
 
 }

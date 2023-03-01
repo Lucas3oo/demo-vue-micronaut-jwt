@@ -11,6 +11,8 @@ node_modules
 .DS_Store
 dist
 dist-ssr
+dist.nosync
+dist-ssr.nosync
 coverage
 *.local
 
@@ -27,3 +29,4 @@ coverage
 *.sln
 *.sw?
 build
+bin

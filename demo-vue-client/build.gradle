@@ -30,7 +30,7 @@ npmInstall {
 }
 npm_run_build {
   inputs.files (fileTree('public'),fileTree('src'),'package.json','package-lock.json')
-  outputs.dirs ('dist')
+  outputs.dirs ('dist.nosync')
 }
 npm_run_build.dependsOn npmInstall
 
@@ -49,10 +49,11 @@ npm_run_build.dependsOn npmInstall
 
 clean {
   delete "${buildDir}"
-  delete 'dist'
+  delete 'dist.nosync'
   delete 'coverage'
 }
 
+build.dependsOn 'npm_run_build'
 
 // due to https://github.com/gradle/gradle/issues/2488
 build.mustRunAfter clean
