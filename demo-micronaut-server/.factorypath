@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <factorypath>
 	<factorypathentry kind="VARJAR" id="GRADLE_USER_HOME/caches/modules-2/files-2.1/io.micronaut.data/micronaut-data-processor/3.8.1/12b0abb9dcdd53dafbbb52a9358f23bb6f86268a/micronaut-data-processor-3.8.1.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="GRADLE_USER_HOME/caches/modules-2/files-2.1/io.micronaut.security/micronaut-security-annotations/3.8.1/46d0c0b962bba9b08e217c0bf7f8e111d24a78ef/micronaut-security-annotations-3.8.1.jar" enabled="true" runInBatchMode="false"/>
 	<factorypathentry kind="VARJAR" id="GRADLE_USER_HOME/caches/modules-2/files-2.1/io.micronaut.data/micronaut-data-model/3.8.1/ff170eaab3c2e0bb0a8674fdad2d5e1f1192ac43/micronaut-data-model-3.8.1.jar" enabled="true" runInBatchMode="false"/>
 	<factorypathentry kind="VARJAR" id="GRADLE_USER_HOME/caches/modules-2/files-2.1/io.micronaut.data/micronaut-data-tx/3.8.1/996df5fc4140dddd4a56f91df71e83e475089f84/micronaut-data-tx-3.8.1.jar" enabled="true" runInBatchMode="false"/>
 	<factorypathentry kind="VARJAR" id="GRADLE_USER_HOME/caches/modules-2/files-2.1/io.micronaut/micronaut-graal/3.7.3/c8c9f5c05364c35916c4b532e944fafb5a9cdd22/micronaut-graal-3.7.3.jar" enabled="true" runInBatchMode="false"/>

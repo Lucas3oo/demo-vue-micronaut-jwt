@@ -1,5 +1,7 @@
 package com.example.demo.book;
 
+import static io.micronaut.security.rules.SecurityRule.IS_ANONYMOUS;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.retry.annotation.Retryable;
+import io.micronaut.security.annotation.Secured;
 import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.validation.Validated;
 
@@ -36,6 +39,7 @@ public class BookController {
   @Inject
   private BookMapper mMapper;
 
+  @Secured(IS_ANONYMOUS)
   @Post
   @Transactional
   @Retryable(attempts = "1", includes = ConstraintViolationException.class)
@@ -55,6 +59,7 @@ public class BookController {
   // define constraints and those will be validated if we use
   // @Valid for the method argument and @Validated at the class level.
   // see https://docs.micronaut.io/latest/guide/#routing
+  @Secured(IS_ANONYMOUS)
   @Get("{?bookFilters*}")
   @ReadOnly
   public Optional<List<BookDto>> getByQueryParams(@Valid BookFilters bookFilters) {
@@ -72,6 +77,7 @@ public class BookController {
     }
   }
 
+  @Secured(IS_ANONYMOUS)
   @Get("/{id}")
   @ReadOnly
   public Optional<BookDto> getById(@PathVariable Long id) {
@@ -80,6 +86,7 @@ public class BookController {
     return mRepository.retrieveById(id);
   }
 
+  @Secured(IS_ANONYMOUS)
   @Put("/{id}")
   @Transactional
   public void update(@PathVariable Long id, @Body @Valid BookDto book) {

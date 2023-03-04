@@ -1,11 +1,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import { default as service} from "@/services/BookService";
+import { default as service } from "@/services/BookService";
 import type { BookDto } from "@/services/BookService";
 import type { ResponseData } from "@/services/HttpClient";
 
 export default defineComponent({
-  name: "list",
+  name: "ListComponent",
   data() {
     return {
       list: [] as BookDto[],
@@ -16,7 +16,8 @@ export default defineComponent({
   },
   methods: {
     getAll() {
-      service.getAll()
+      service
+        .getAll()
         .then((response: ResponseData) => {
           this.list = response.data;
           console.log(response.data);
@@ -37,9 +38,9 @@ export default defineComponent({
       this.currentIndex = index;
     },
 
-
     searchDescription() {
-      service.getByQueryParams(this.description)
+      service
+        .getByQueryParams(this.description)
         .then((response: ResponseData) => {
           this.list = response.data;
           this.setActive({} as BookDto);
@@ -55,7 +56,6 @@ export default defineComponent({
   },
 });
 </script>
-
 
 <template>
   <div class="list row">
@@ -91,7 +91,6 @@ export default defineComponent({
           {{ item.description }}
         </li>
       </ul>
-
     </div>
     <div class="col-md-6">
       <div v-if="current.id">
@@ -100,9 +99,7 @@ export default defineComponent({
           <label><strong>Description:</strong></label> {{ current.description }}
         </div>
 
-        <router-link
-          :to="'/books/' + current.id"
-          class="badge badge-warning"
+        <router-link :to="'/books/' + current.id" class="badge badge-warning"
           >Edit</router-link
         >
       </div>
@@ -113,7 +110,6 @@ export default defineComponent({
     </div>
   </div>
 </template>
-
 
 <style>
 .list {

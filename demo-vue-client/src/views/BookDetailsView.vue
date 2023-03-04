@@ -2,9 +2,8 @@
 import BookDetailsComponent from "../components/BookDetailsComponent.vue";
 </script>
 
-
 <template>
-  <BookDetailsComponent/>
+  <BookDetailsComponent />
 </template>
 
 <style>

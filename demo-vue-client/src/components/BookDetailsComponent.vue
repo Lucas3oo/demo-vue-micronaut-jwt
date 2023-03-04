@@ -1,11 +1,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import { default as service} from "@/services/BookService";
+import { default as service } from "@/services/BookService";
 import type { BookDto } from "@/services/BookService";
 import type { ResponseData } from "@/services/HttpClient";
 
 export default defineComponent({
-  name: "item",
+  name: "ItemComponent",
   data() {
     return {
       current: {} as BookDto,
@@ -13,8 +13,9 @@ export default defineComponent({
     };
   },
   methods: {
-    get(id: any) {
-      service.getById(id)
+    getItem(id: any) {
+      service
+        .getById(id)
         .then((response: ResponseData) => {
           this.current = response.data;
           console.log(response.data);
@@ -24,8 +25,9 @@ export default defineComponent({
         });
     },
 
-    update() {
-      service.update(this.current.id, this.current)
+    updateItem() {
+      service
+        .update(this.current.id, this.current)
         .then((response: ResponseData) => {
           console.log(response.data);
           this.message = "The book was updated successfully!";
@@ -35,8 +37,9 @@ export default defineComponent({
         });
     },
 
-    delete() {
-      service.delete(this.current.id)
+    deleteItem() {
+      service
+        .delete(this.current.id)
         .then((response: ResponseData) => {
           console.log(response.data);
           this.$router.push({ name: "books" });
@@ -48,7 +51,7 @@ export default defineComponent({
   },
   mounted() {
     this.message = "";
-    this.get(this.$route.params.id);
+    this.getItem(this.$route.params.id);
   },
 });
 </script>
@@ -66,15 +69,11 @@ export default defineComponent({
           v-model="current.description"
         />
       </div>
-
     </form>
 
+    <button class="badge badge-danger mr-2" @click="deleteItem">Delete</button>
 
-    <button class="badge badge-danger mr-2" @click="delete">
-      Delete
-    </button>
-
-    <button type="submit" class="badge badge-success" @click="update">
+    <button type="submit" class="badge badge-success" @click="updateItem">
       Update
     </button>
     <p>{{ message }}</p>

@@ -2,7 +2,6 @@
 import BookCreateComponent from "../components/BookCreateComponent.vue";
 </script>
 
-
 <template>
   <BookCreateComponent />
 </template>

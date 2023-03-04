@@ -4,6 +4,8 @@
   <logger name="io.micronaut" level="INFO" />
   <logger name="io.micronaut.function" level="INFO" />
   <logger name="io.micronaut.function.aws.proxy" level="DEBUG" />
+  <!-- http tracing, both incomming and outgoing http requests/responses -->
+  <logger name="io.micronaut.http" level="TRACE" />
 
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import BookListComponent from "../components/BookListComponent.vue";
+import ProfileComponent from "../components/ProfileComponent.vue";
 </script>
 
 <template>
-  <BookListComponent />
+  <ProfileComponent />
 </template>
 
 <style>

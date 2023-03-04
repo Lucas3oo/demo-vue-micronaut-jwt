@@ -27,6 +27,7 @@ dependencyManagement {
     imports {
       mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
       mavenBom 'org.junit:junit-bom:5.9.1'
+//      mavenBom 'org.zalando:logbook-bom:2.15.0'
     }
   }
 }
@@ -36,12 +37,14 @@ dependencies {
   annotationProcessor 'io.micronaut.data:micronaut-data-processor'
   annotationProcessor 'io.micronaut:micronaut-http-validation'
   annotationProcessor 'io.micronaut:micronaut-inject-java'
+  annotationProcessor 'io.micronaut.security:micronaut-security-annotations'
   annotationProcessor 'org.mapstruct:mapstruct-processor'
   implementation 'io.hypersistence:hypersistence-utils-hibernate-55'
   implementation 'io.micrometer:micrometer-core'
-  implementation 'io.micronaut.aws:micronaut-aws-sdk-v2'
   implementation 'io.micronaut.beanvalidation:micronaut-hibernate-validator'
   implementation 'io.micronaut.data:micronaut-data-hibernate-jpa'
+  implementation 'io.micronaut.security:micronaut-security-jwt'
+  implementation 'io.micronaut.security:micronaut-security-oauth2'
   implementation 'io.micronaut.sql:micronaut-hibernate-jpa'
   implementation 'io.micronaut.sql:micronaut-jdbc-hikari'
   implementation 'io.micronaut:micronaut-http-client'
@@ -52,6 +55,8 @@ dependencies {
   implementation 'javax.inject:javax.inject'
   implementation 'org.apache.commons:commons-lang3'
   implementation 'org.mapstruct:mapstruct'
+//  implementation 'org.zalando:logbook-core'
+//  implementation 'org.zalando:logbook-netty'
   runtimeOnly 'ch.qos.logback:logback-classic'
   runtimeOnly 'com.h2database:h2' // should be for test only
   runtimeOnly 'com.mysql:mysql-connector-j'

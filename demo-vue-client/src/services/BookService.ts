@@ -21,7 +21,7 @@ export class BookService {
   update(id: string, data: BookDto): Promise<any> {
     return http.put(`/books/${id}`, data);
   }
- 
+
   delete(id: string): Promise<any> {
     return http.delete(`/books/${id}`);
   }
