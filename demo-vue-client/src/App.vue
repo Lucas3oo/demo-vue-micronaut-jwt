@@ -19,6 +19,9 @@ export default defineComponent({
     async isAuthenticated() {
       this.authenticated = await this.$auth.isAuthenticated();
     },
+    async login() {
+      await this.$auth.signInWithRedirect()
+    },
     async logout() {
       await this.$auth.signOut();
     },
@@ -37,11 +40,16 @@ export default defineComponent({
         <li class="nav-item">
           <router-link to="/create" v-if="authenticated" class="nav-link">New Book...</router-link>
         </li>
+        <!--
         <li class="nav-item">
           <router-link to="/login" v-if="!authenticated" class="nav-link">Login</router-link>
         </li>
+        -->
         <li class="nav-item">
-          <router-link to="/profile" class="nav-link">Profile</router-link>
+          <router-link to="/profile" v-if="authenticated" class="nav-link">Profile</router-link>
+        </li>
+        <li class="nav-item">
+          <a v-if="!authenticated" v-on:click="login()" class="nav-link">Login</a>
         </li>
         <li class="nav-item">
           <a v-if="authenticated" v-on:click="logout()" class="nav-link">Logout</a>
