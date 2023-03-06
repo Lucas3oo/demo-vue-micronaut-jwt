@@ -1,6 +1,6 @@
 package com.example.demo.book;
 
-import static io.micronaut.security.rules.SecurityRule.IS_ANONYMOUS;
+import static io.micronaut.security.rules.SecurityRule.IS_AUTHENTICATED;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
@@ -27,6 +28,7 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.validation.Validated;
 
+@Secured(IS_AUTHENTICATED)
 @Validated
 @Controller("/api/v1/books")
 public class BookController {
@@ -39,7 +41,6 @@ public class BookController {
   @Inject
   private BookMapper mMapper;
 
-  @Secured(IS_ANONYMOUS)
   @Post
   @Transactional
   @Retryable(attempts = "1", includes = ConstraintViolationException.class)
@@ -59,7 +60,6 @@ public class BookController {
   // define constraints and those will be validated if we use
   // @Valid for the method argument and @Validated at the class level.
   // see https://docs.micronaut.io/latest/guide/#routing
-  @Secured(IS_ANONYMOUS)
   @Get("{?bookFilters*}")
   @ReadOnly
   public Optional<List<BookDto>> getByQueryParams(@Valid BookFilters bookFilters) {
@@ -77,7 +77,6 @@ public class BookController {
     }
   }
 
-  @Secured(IS_ANONYMOUS)
   @Get("/{id}")
   @ReadOnly
   public Optional<BookDto> getById(@PathVariable Long id) {
@@ -86,7 +85,6 @@ public class BookController {
     return mRepository.retrieveById(id);
   }
 
-  @Secured(IS_ANONYMOUS)
   @Put("/{id}")
   @Transactional
   public void update(@PathVariable Long id, @Body @Valid BookDto book) {
@@ -97,6 +95,13 @@ public class BookController {
     BookEntity entity = mRepository.findById(id)
         .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Book with id '" + id + "' not found"));
     mMapper.updateEntity(book, entity);
+  }
+
+  @Delete("/{id}")
+  @Transactional
+  public void delete(@PathVariable Long id) {
+    sLogger.debug("in delete method, id: {}", id);
+    mRepository.deleteById(id);
   }
 
 }

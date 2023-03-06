@@ -27,7 +27,8 @@ public class CaffeineController {
     List<String> givenList = Arrays.asList("Head on table asleep. Needs coffee now!", "Not at all. What's wrong?!",
         "Mildly. Boring.", "Making progress.", "Everything is awesome. Stuff is definitely happening.",
         "Eyeballs are rolling around in my head and I'm shouting at my coworker about JHipster.",
-        "The LD50 of caffeine is 100 cups. Your developer has had 99 and is talking to the bike rack outside while jogging in place.");
+        "The LD50 of caffeine is 100 cups. Your developer has had 99 and is talking to the bike rack outside "
+            + "while jogging in place.");
 
     String caffeineLevelString = givenList.get(sRand.nextInt(givenList.size()));
     return caffeineLevelString;

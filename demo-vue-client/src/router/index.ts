@@ -6,8 +6,8 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/",
-      alias: "/books",
+      path: "/books",
+      name: "books",
       component: () => import("../views/BookListView.vue"),
       meta: {
         requiresAuth: true,
@@ -15,13 +15,15 @@ const router = createRouter({
     },
     {
       path: "/books/:id",
+      name: "books-details",
       component: () => import("../views/BookDetailsView.vue"),
       meta: {
         requiresAuth: true,
       },
     },
     {
-      path: "/create",
+      path: "/books-create",
+      name: "books-create",
       component: () => import("../views/BookCreateView.vue"),
       meta: {
         requiresAuth: true,

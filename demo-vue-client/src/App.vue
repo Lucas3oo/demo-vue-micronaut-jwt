@@ -38,13 +38,8 @@ export default defineComponent({
           <router-link to="/books" v-if="authenticated" class="nav-link">List</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/create" v-if="authenticated" class="nav-link">New Book...</router-link>
+          <router-link to="/books-create" v-if="authenticated" class="nav-link">New Book...</router-link>
         </li>
-        <!--
-        <li class="nav-item">
-          <router-link to="/login" v-if="!authenticated" class="nav-link">Login</router-link>
-        </li>
-        -->
         <li class="nav-item">
           <router-link to="/profile" v-if="authenticated" class="nav-link">Profile</router-link>
         </li>

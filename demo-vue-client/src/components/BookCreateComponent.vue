@@ -9,7 +9,6 @@ export default defineComponent({
   data() {
     return {
       item: {
-        id: "",
         description: "",
       } as BookDto,
       submitted: false,
@@ -18,7 +17,6 @@ export default defineComponent({
   methods: {
     saveItem() {
       let data = {
-        id: "",
         description: this.item.description,
       } as BookDto;
 

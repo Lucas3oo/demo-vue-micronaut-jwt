@@ -1,23 +1,25 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { ClaimDto } from "@/okta";
+import type { CustomUserClaim } from "@okta/okta-auth-js";
+
+interface Claim {
+  name: string;
+  value: CustomUserClaim | CustomUserClaim[];
+}
+
 
 export default defineComponent({
   name: "ProfileComponent",
   data() {
     return {
-      claims: [] as ClaimDto[],
+      claims: [] as Claim[],
     };
   },
-  /*
-
   async created() {
     this.claims = await Object.entries(await this.$auth.getUser()).map(
-      (entry) => ({ claim: entry[0], value: entry[1].toString() })
+      (entry) => ({ name: entry[0], value: entry[1] })
     );
   },
-
-  */
 });
 
 </script>
@@ -34,13 +36,10 @@ export default defineComponent({
         </tr>
       </thead>
       <tbody>
-      <!--
-
         <tr v-for="(claim, index) in claims" :key="index">
-          <td>{{ claim.claim }}</td>
-          <td :id="'claim-' + claim.claim">{{ claim.value }}</td>
+          <td>{{ claim.name }}</td>
+          <td :id="'claim-' + claim.name">{{ claim.value }}</td>
         </tr>
-        -->
       </tbody>
     </table>
   </div>

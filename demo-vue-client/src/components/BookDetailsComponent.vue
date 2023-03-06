@@ -27,9 +27,8 @@ export default defineComponent({
 
     updateItem() {
       service
-        .update(this.current.id, this.current)
-        .then((response: ResponseData) => {
-          console.log(response.data);
+        .update(this.current.id!, this.current)
+        .then(() => {
           this.message = "The book was updated successfully!";
         })
         .catch((e: Error) => {
@@ -39,9 +38,8 @@ export default defineComponent({
 
     deleteItem() {
       service
-        .delete(this.current.id)
-        .then((response: ResponseData) => {
-          console.log(response.data);
+        .delete(this.current.id!)
+        .then(() => {
           this.$router.push({ name: "books" });
         })
         .catch((e: Error) => {

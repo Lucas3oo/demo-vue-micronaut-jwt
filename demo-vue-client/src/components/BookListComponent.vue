@@ -20,7 +20,6 @@ export default defineComponent({
         .getAll()
         .then((response: ResponseData) => {
           this.list = response.data;
-          console.log(response.data);
         })
         .catch((e: Error) => {
           console.log(e);
@@ -98,10 +97,7 @@ export default defineComponent({
         <div>
           <label><strong>Description:</strong></label> {{ current.description }}
         </div>
-
-        <router-link :to="'/books/' + current.id" class="badge badge-warning"
-          >Edit</router-link
-        >
+        <router-link :to="'/books/' + current.id" class="badge badge-warning">Edit</router-link>
       </div>
       <div v-else>
         <br />
