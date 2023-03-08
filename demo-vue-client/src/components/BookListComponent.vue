@@ -1,8 +1,10 @@
 <script lang="ts">
-import { defineComponent } from "vue";
-import { default as service } from "@/services/BookService";
+import { defineComponent, inject } from "vue";
 import type { BookDto } from "@/services/BookService";
 import type { ResponseData } from "@/services/HttpClient";
+import { bookService } from "@/services/ServiceNames";
+import type { BookService } from "@/services/BookService";
+
 
 export default defineComponent({
   name: "ListComponent",
@@ -14,9 +16,14 @@ export default defineComponent({
       description: "",
     };
   },
+  setup() {
+    return {
+      service: inject(bookService) as BookService,
+    }
+  },
   methods: {
     getAll() {
-      service
+      this.service
         .getAll()
         .then((response: ResponseData) => {
           this.list = response.data;
@@ -38,12 +45,11 @@ export default defineComponent({
     },
 
     searchDescription() {
-      service
+      this.service
         .getByQueryParams(this.description)
         .then((response: ResponseData) => {
           this.list = response.data;
           this.setActive({} as BookDto);
-          console.log(response.data);
         })
         .catch((e: Error) => {
           console.log(e);

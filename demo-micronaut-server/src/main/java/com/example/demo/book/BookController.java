@@ -1,7 +1,5 @@
 package com.example.demo.book;
 
-import static io.micronaut.security.rules.SecurityRule.IS_AUTHENTICATED;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +23,10 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.retry.annotation.Retryable;
 import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.authentication.Authentication;
 import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.validation.Validated;
 
-@Secured(IS_AUTHENTICATED)
 @Validated
 @Controller("/api/v1/books")
 public class BookController {
@@ -43,6 +41,7 @@ public class BookController {
 
   @Post
   @Transactional
+  @Secured("admin")
   @Retryable(attempts = "1", includes = ConstraintViolationException.class)
   public Long create(@Body @Valid BookDto book) {
     sLogger.debug("in add method");
@@ -62,8 +61,10 @@ public class BookController {
   // see https://docs.micronaut.io/latest/guide/#routing
   @Get("{?bookFilters*}")
   @ReadOnly
-  public Optional<List<BookDto>> getByQueryParams(@Valid BookFilters bookFilters) {
-    sLogger.debug("in getByQueryParams method");
+  @Secured({ "admin", "readonly" })
+  public Optional<List<BookDto>> getByQueryParams(@Valid BookFilters bookFilters, Authentication principal) {
+    sLogger.debug("in getByQueryParams method. Called by {} having roles {}", principal.getName(),
+        principal.getRoles());
 
     // even if bookFilters is indeed optional the instance is created but with its properties set to null.
     if (bookFilters.getDescription() != null) {
@@ -79,6 +80,7 @@ public class BookController {
 
   @Get("/{id}")
   @ReadOnly
+  @Secured({ "admin", "readonly" })
   public Optional<BookDto> getById(@PathVariable Long id) {
     sLogger.debug("in getById method, id: {}", id);
     // empty Optional will be translated to 404
@@ -87,6 +89,7 @@ public class BookController {
 
   @Put("/{id}")
   @Transactional
+  @Secured("admin")
   public void update(@PathVariable Long id, @Body @Valid BookDto book) {
     sLogger.debug("in update method, id: {}", id);
     if (!id.equals(NumberUtils.createLong(book.getId()))) {
@@ -99,6 +102,7 @@ public class BookController {
 
   @Delete("/{id}")
   @Transactional
+  @Secured("admin")
   public void delete(@PathVariable Long id) {
     sLogger.debug("in delete method, id: {}", id);
     mRepository.deleteById(id);

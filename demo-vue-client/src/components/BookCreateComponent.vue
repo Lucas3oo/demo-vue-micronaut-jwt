@@ -1,8 +1,10 @@
 <script lang="ts">
-import { defineComponent } from "vue";
-import { default as service } from "@/services/BookService";
+import { defineComponent, inject } from "vue";
 import type { BookDto } from "@/services/BookService";
 import type { ResponseData } from "@/services/HttpClient";
+import { bookService } from "@/services/ServiceNames";
+import type { BookService } from "@/services/BookService";
+
 
 export default defineComponent({
   name: "CreateComponent",
@@ -14,13 +16,18 @@ export default defineComponent({
       submitted: false,
     };
   },
+  setup() {
+    return {
+      service: inject(bookService) as BookService,
+    }
+  },
   methods: {
     saveItem() {
       let data = {
         description: this.item.description,
       } as BookDto;
 
-      service
+      this.service
         .create(data)
         .then((response: ResponseData) => {
           this.item.id = response.data.id;

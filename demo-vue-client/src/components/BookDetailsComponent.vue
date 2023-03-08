@@ -1,8 +1,10 @@
 <script lang="ts">
-import { defineComponent } from "vue";
-import { default as service } from "@/services/BookService";
+import { defineComponent, inject } from "vue";
 import type { BookDto } from "@/services/BookService";
 import type { ResponseData } from "@/services/HttpClient";
+import { bookService } from "@/services/ServiceNames";
+import type { BookService } from "@/services/BookService";
+
 
 export default defineComponent({
   name: "ItemComponent",
@@ -12,9 +14,14 @@ export default defineComponent({
       message: "",
     };
   },
+  setup() {
+    return {
+      service: inject(bookService) as BookService,
+    }
+  },
   methods: {
     getItem(id: any) {
-      service
+      this.service
         .getById(id)
         .then((response: ResponseData) => {
           this.current = response.data;
@@ -26,7 +33,7 @@ export default defineComponent({
     },
 
     updateItem() {
-      service
+      this.service
         .update(this.current.id!, this.current)
         .then(() => {
           this.message = "The book was updated successfully!";
@@ -37,7 +44,7 @@ export default defineComponent({
     },
 
     deleteItem() {
-      service
+      this.service
         .delete(this.current.id!)
         .then(() => {
           this.$router.push({ name: "books" });
