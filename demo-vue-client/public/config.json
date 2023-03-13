@@ -1,6 +1,6 @@
 {
   "_description" : "Config for local development",
-  "oktaUri": "https://dev-73627270.okta.com",
-  "oktaClientId" : "0oa8kdpoqrDslugRn5d7",
+  "openIdIssuer": "https://dev-73627270.okta.com/oauth2/default",
+  "openIdClientId" : "0oa8kdpoqrDslugRn5d7",
   "backendApiUrl" : "http://localhost:8082"
 }

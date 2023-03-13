@@ -21,14 +21,11 @@ micronaut:
         my-okta-app: # The provider identifier 
           openid:
             issuer: https://dev-73627270.okta.com/oauth2/default
-    endpoints:
-      logout:
-        enabled: true
-        get-allowed: true    
     token:
       # must be the same name as the role "claim" created in Okta for app user roles.        
       # now the myRole claim is automatically mapped to the roles attrbute in Micronaut's 
       # io.micronaut.security.authentication.Authentication
+      # Micronaut automatically maps all 'groups' claim entries to corresponding roles
       roles-name: myRole 
     
 datasources:

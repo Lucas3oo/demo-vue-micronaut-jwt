@@ -2,7 +2,10 @@ import { OktaAuth } from "@okta/okta-auth-js";
 import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 
-export function buildHttpClient(backendApiUrl: string, oktaClient: OktaAuth): AxiosInstance {
+/**
+  Create a http client that automatically decorate the request with OpenID access token.
+*/
+export function buildHttpClient(backendApiUrl: string, authService: OktaAuth): AxiosInstance {
   const httpClient: AxiosInstance = axios.create({
     baseURL: backendApiUrl + "/api/v1",
     headers: {
@@ -10,7 +13,7 @@ export function buildHttpClient(backendApiUrl: string, oktaClient: OktaAuth): Ax
     },
   });
   const handleRequest = (config: AxiosRequestConfig) => {
-    const accessToken: string = oktaClient.tokenManager.getTokensSync().accessToken!.accessToken;
+    const accessToken: string = authService.tokenManager.getTokensSync().accessToken!.accessToken;
     config!.headers!.Authorization = `Bearer ${accessToken}`;
     return config;
   };

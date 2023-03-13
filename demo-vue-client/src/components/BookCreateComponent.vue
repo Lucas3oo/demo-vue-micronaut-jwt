@@ -7,7 +7,7 @@ import type { BookService } from "@/services/BookService";
 
 
 export default defineComponent({
-  name: "CreateComponent",
+  name: "BookCreateComponent",
   data() {
     return {
       item: {

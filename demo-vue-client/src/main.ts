@@ -9,8 +9,8 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 interface Config {
-  oktaUri: string;
-  oktaClientId: string;
+  openIdIssuer: string;
+  openIdClientId: string;
   backendApiUrl: string;
 }
 
@@ -19,20 +19,20 @@ interface Config {
 fetch(window.location.origin + "/config.json")
   .then((response) => response.json())
   .then((config: Config) => {
-    const oktaClient: OktaAuth = new OktaAuth({
-      issuer: `${config.oktaUri}/oauth2/default`,
-      clientId: config.oktaClientId,
+    const authService: OktaAuth = new OktaAuth({
+      issuer: config.openIdIssuer,
+      clientId: config.openIdClientId,
       redirectUri: window.location.origin + "/login/callback",
       scopes: ["openid", "profile", "email"],
     });
-    // install the OktaVue plugin so that you can access Okta SDK from 'this.$auth'
+    // install the OktaVue plugin so that you can access Okta SDK from 'this.$auth' of type OktaAuth
     // install BookService plugin so that you can inject a BookService in components
     createApp(App)
       .use(router)
       .use(OktaVue, {
-        oktaAuth: oktaClient,
+        oktaAuth: authService,
         onAuthRequired: () => { },
         onAuthResume: () => { },
       })
-      .use(BookServicePlugin, buildHttpClient(config.backendApiUrl, oktaClient)).mount("#app");
+      .use(BookServicePlugin, buildHttpClient(config.backendApiUrl, authService)).mount("#app");
   });

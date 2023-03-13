@@ -7,7 +7,7 @@ import type { BookService } from "@/services/BookService";
 
 
 export default defineComponent({
-  name: "ItemComponent",
+  name: "BookDetailsComponent",
   data() {
     return {
       current: {} as BookDto,
